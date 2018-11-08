@@ -16,7 +16,7 @@ services:
     image: nextcloud
     ports:
       - 5800:80
-    links:
+    depends_on:
       - mysql
     volumes:
       - /opt/data/nextcloud/html:/var/www/html

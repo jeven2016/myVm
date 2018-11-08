@@ -1,8 +1,8 @@
 version: '2'
-
 services:
   mysql:
     image: 'mysql:5.7'
+    command: mysqld --user=root --verbose
     restart: always
     volumes:
       - /opt/data/mysql/db:/var/lib/mysql

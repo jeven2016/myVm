@@ -1,0 +1,25 @@
+version: '2'
+
+services:
+  mysql:
+    image: mysql
+    restart: always
+    volumes:
+      - /opt/data/mysql/db:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=$Wzj_mysql01
+      - MYSQL_PASSWORD=$Wzj_mysql01
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=db_user
+
+  app:
+    image: nextcloud
+    ports:
+      - 5800:80
+    links:
+      - mysql
+    volumes:
+      - /opt/data/nextcloud/html:/var/www/html
+      - /opt/data/nextcloud/data:/var/www/html/data
+      - /opt/data/nextcloud/config:/var/www/html/config
+    restart: always

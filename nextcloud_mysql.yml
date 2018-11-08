@@ -1,6 +1,6 @@
 version: '2'
 services:
-  mysql:
+  db:
     image: 'mysql:5.7'
     command: mysqld --user=root --verbose
     restart: always
@@ -17,7 +17,7 @@ services:
     ports:
       - 5800:80
     depends_on:
-      - mysql
+      - db
     volumes:
       - /opt/data/nextcloud/html:/var/www/html
       - /opt/data/nextcloud/data:/var/www/html/data

@@ -2,6 +2,6 @@
 version: '2'
 services:
   applecms:
-    image: antage/apache2-php5
+    image: zjtech/applecms
     ports:
       - "80:80"

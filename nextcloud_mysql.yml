@@ -24,17 +24,25 @@ services:
       - /opt/data/nextcloud/config:/var/www/html/config
     restart: always
 
-  discuz:
-    image: skyzhou/docker-discuz
+#  discuz:
+#    image: skyzhou/docker-discuz
+#    ports:
+#      - 80:80
+#    depends_on:
+#      - db
+#    environment:
+#      - MYSQL_PORT_3306_TCP=db:3306
+#      - DISCUZ_DB_PASSWORD=Wzj_mysql01
+#      - MYSQL_ENV_MYSQL_ROOT_PASSWORD=Wzj_mysql01
+#      - DISCUZ_DB_USER=db_user
+#      - DISCUZ_DB_NAME=discuz
+#    restart: always
+
+  movie:
+    image: zjtech/applecms
     ports:
-      - 80:80
+      - 5802:80
     depends_on:
       - db
-    environment:
-      - MYSQL_PORT_3306_TCP=db:3306
-      - DISCUZ_DB_PASSWORD=Wzj_mysql01
-      - MYSQL_ENV_MYSQL_ROOT_PASSWORD=Wzj_mysql01
-      - DISCUZ_DB_USER=db_user
-      - DISCUZ_DB_NAME=discuz
     restart: always
 

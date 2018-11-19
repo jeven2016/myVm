@@ -17,8 +17,10 @@ RUN apt-get install -y  unzip\
     && ls -l \
     && rm -rf * \
     && curl http://down.maccms.com/10x/maccms10.zip -o cms.zip --progress  \
+    && echo "list all files in this direct" \
+    && pwd  \
+    && ls -l \
     && unzip cms.zip  \
     && chmod -R 777 * \
-    && rm -f cms.zip  \
     && rm -rf /var/lib/apt/lists/*  \
     && ls -l 

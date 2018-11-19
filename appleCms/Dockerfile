@@ -5,7 +5,7 @@ MAINTAINER jeven<10396857@qq.com>
 ENV WWW_ROOT /var/www/html/
 
 RUN apt-get update  \
-    && apt-get install -y  unzip php-gd\
+    && apt-get install -y  unzip php7.0-gd\
     && cd ${WWW_ROOT}  \
     && ls -l \
     && rm -rf * \

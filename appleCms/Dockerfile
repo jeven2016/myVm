@@ -12,6 +12,8 @@ RUN apt-get update \
     && unzip cms.zip  \
     && chmod -R 777 * \
     && rm -f cms.zip  \
+    && rm -rf /var/lib/apt/lists/*
     && ls -l 
+   
 
 EXPOSE 80 443

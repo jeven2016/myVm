@@ -1,15 +1,11 @@
-FROM y109/discuz
+FROM php:7.2.4-apache
 
 MAINTAINER jeven<10396857@qq.com>
 
 ENV WWW_ROOT /var/www/html/
 
-RUN export http_proxy=http://10.188.53.53:80  \
-    && export https_proxy=http://10.188.53.53:80 
-
-
 RUN apt-get update  \
-    && apt-get install -y  unzip \
+    && apt-get install -y  unzip php-gd\
     && cd ${WWW_ROOT}  \
     && ls -l \
     && rm -rf * \

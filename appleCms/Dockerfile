@@ -24,8 +24,8 @@ RUN apt-get install -y  unzip  \
     && echo "list all files in this direct" \
     && pwd  \
     && ls -l \
-    && unzip cms.zip  \
+    && unzip *.zip  \
     && chmod -R 777 * \
     && rm -rf /var/lib/apt/lists/*  \
-    && rm -f cms.zip  \
+    && rm -f *.zip  \
     && ls -l 

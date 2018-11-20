@@ -27,4 +27,5 @@ RUN apt-get install -y  unzip  \
     && unzip cms.zip  \
     && chmod -R 777 * \
     && rm -rf /var/lib/apt/lists/*  \
+    && rm -f cms.zip  \
     && ls -l 

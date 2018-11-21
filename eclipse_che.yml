@@ -1,0 +1,11 @@
+version: '2'
+services:
+    eclipse:
+      image: 'eclipse/che-server'
+      ports:
+        - 5805:8080
+      volumes:
+        - /var/run/docker.sock:/var/run/docker.sock
+        - /opt/data/eclipse:/data
+      environment:
+        - CHE_HOST=119.3.66.114

@@ -1,13 +1,15 @@
 <?php
-header("Content-Type: image/jpeg;text/html; charset=utf-8");
-$url = 'http://'.$_GET['tu'];
-$ch = curl_init($url); //       问题反馈：995161098
-//curl_setopt($ch, CURLOPT_REFERER, "http://www.iqiyi.com/"); //伪造来路页面
-//curl_setopt($ch, CURLOPT_HTTPHEADER, array('X-FORWARDED-FOR:'. getIP().'', 'CLIENT-IP:'. getIP().'')); //构造IP 
-curl_setopt($ch, CURLOPT_HEADER, 0); //不返回header部分
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); //返回字符串，而非直接输出
-$FH= curl_exec($ch);
-curl_close($ch);
-echo $FH;
+header("Content-Type:image/jpeg");
+@$picurl = "http://".$_GET['tu'];
+echo getnepianImg($picurl);
+function getnepianImg($url){
+	$ch=curl_init();
+	curl_setopt($ch, CURLOPT_URL, $url);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
+	$data=curl_exec($ch);
+	curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, '20');
+	return $data;
+	curl_close($ch);
+}
 exit; 
 ?>

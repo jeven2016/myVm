@@ -1,3 +1,4 @@
-nextcloud  :  5800
-discuz :  5801
-applecms :  5802
+nextcloud     :  5800
+discuz        :  5801
+applecms      :  5802
+adminMongo    :  5803

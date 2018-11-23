@@ -1,0 +1,101 @@
+
+        
+    upstream netdisk {
+        ip_hash;
+        server netdisk:80 weight=1 max_fails=2 fail_timeout=30s;
+    }        
+    
+
+    
+    server
+    {
+        listen          443 ssl;
+        server_name     www.jujucome.cn;
+        
+        #对应域名或IP需要在http://server_name中体现的值,其中172.17.42.1为该nginx在docker容器中的IP地址。当使用docker后，如果在相同的Host上对容器内的web请求，其地址是172.17.42.1而非127.0.0.1
+        #server_name      172.17.0.2 172.17.0.1 192.168.3.3;
+        
+        #only enable TLSv1.2 and specify the mandatory ciphers for use
+        ssl_protocols TLSv1.2;
+        ssl_prefer_server_ciphers on; ssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256;
+        
+        
+        proxy_set_header Host       $http_host;   # required for Docker client sake
+        proxy_set_header X-Real-IP  $remote_addr; # pass on real client IP
+
+        
+        index           index.html index.htm;
+        root            /opt/webapp;
+        
+        # include other config files
+        #include                      nginx-cg.conf;
+        
+        location /movie {
+            proxy_pass         http://movie/;
+            proxy_redirect     off;
+            proxy_set_header   Host             $host;
+            proxy_set_header   X-Real-IP        $remote_addr;
+            proxy_set_header  X-Forwarded-For  $proxy_add_x_forwarded_for;
+            
+            proxy_connect_timeout      60;
+            proxy_send_timeout         60;
+            proxy_read_timeout         60;
+            proxy_buffer_size          4k;
+            proxy_buffers              4 32k;
+            proxy_busy_buffers_size    64k;
+            proxy_temp_file_write_size 64k;
+            #proxy_temp_path            /home/nginx/proxy_temp;
+            
+            #当NGINX收到服务器返回的error，timeout或者其他指定的5xx错误，并且在其缓存中有请求文件的陈旧版本，则会将这些陈旧版本的文件而不是错误信息发送给客户端
+            #proxy_cache_use_stale error timeout http_500 http_502 http_503 http_504;
+            
+            #expires 3d;
+            #expires -1;
+        }
+        
+         # nextcloud
+        location /pan {
+            proxy_pass         http://netdisk/;
+            proxy_redirect     off;
+            proxy_set_header   Host             $host;
+            proxy_set_header   X-Real-IP        $remote_addr;
+            proxy_set_header  X-Forwarded-For  $proxy_add_x_forwarded_for;
+            
+            proxy_connect_timeout      60;
+            proxy_send_timeout         60;
+            proxy_read_timeout         60;
+            proxy_buffer_size          4k;
+            proxy_buffers              4 32k;
+            proxy_busy_buffers_size    64k;
+            proxy_temp_file_write_size 64k;
+        
+            sub_filter 'src="/js/' 'src="/pan/js/';
+            sub_filter 'src="/core/' 'src="/pan/core/';
+            sub_filter 'src="/apps/' 'src="/pan/apps/';
+            sub_filter 'href="/css/' 'src="/pan/css/';
+            sub_filter 'href="/core/' 'href="/pan/core/';
+            sub_filter 'href="/apps/' 'href="/pan/apps/';
+            sub_filter_once on;
+        }
+
+        # 定义错误提示页面
+        error_page   500 502 503 504 /50x.html;
+        location = /50x.html {
+            root   /opt/webapp;
+        }
+        
+        location ~ .*\.(gif|jpg|jpeg|png|bmp|swf|ioc|rar|zip|txt|flv|mid|doc|ppt|pdf|xls|mp3|wma)$
+        {
+            expires 15d;
+        }
+
+        location ~ .*\.(html|htm|js|css)$
+        {
+            #禁止缓存
+            expires 1h;
+        }
+        
+        location ~ ^/(WEB-INF)/ {   
+            deny all;   
+        }
+    }

@@ -41,20 +41,21 @@ services:
   movie:
     image: zjtech/applecms
     ports:
-      - 5802:80
+      - 80:80
     depends_on:
       - db
     restart: always
 
-  gateway:
-    image: nginx
-    ports:
-      - 443:443
-    #links:
-    #  - movie:movie
-    volumes:
-      - '/opt/github/myVm/gateway:/opt/nginx/conf/'
-      - '/opt/github/myVm/gateway/nginx.conf:/etc/nginx/nginx.conf'
+  #gateway:
+  #  image: nginx
+  #  ports:
+  #    - 443:443
+  #    - 80:80
+  #  #links:
+  #  #  - movie:movie
+  #  volumes:
+  #    - '/opt/github/myVm/gateway:/opt/nginx/conf/'
+  #    - '/opt/github/myVm/gateway/nginx.conf:/etc/nginx/nginx.conf'
 
   mongo:
     image: mongo

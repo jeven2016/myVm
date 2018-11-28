@@ -12,17 +12,17 @@ services:
       - MYSQL_DATABASE=nextcloud
       - MYSQL_USER=db_user
 
-  netdisk:
-    image: nextcloud
-    ports:
-      - 5800:80
-    depends_on:
-      - db
-    volumes:
-      - /opt/data/nextcloud/html:/var/www/html
-      - /opt/data/nextcloud/data:/var/www/html/data
-      - /opt/data/nextcloud/config:/var/www/html/config
-    restart: always
+#  netdisk:
+#    image: nextcloud
+#    ports:
+#      - 5800:80
+#    depends_on:
+#      - db
+#    volumes:
+#      - /opt/data/nextcloud/html:/var/www/html
+#      - /opt/data/nextcloud/data:/var/www/html/data
+#      - /opt/data/nextcloud/config:/var/www/html/config
+#    restart: always
 
 #  discuz:
 #    image: skyzhou/docker-discuz
@@ -71,8 +71,8 @@ services:
   admin-mongo:
     image: mrvautin/adminmongo
     # restart: always
-    ports:
-    - '5803:1234'
+    #ports:
+    #- '5803:1234'
 
   tracker1:
     image: ygqygq2/fastdfs-nginx
@@ -96,8 +96,8 @@ services:
    
   image-service:
     image: jeven2016/image-service
-    ports:
-    - '5806:5806'
+    #ports:
+    #- '5806:5806'
     environment:
     - tracker=172.16.0.192:22122
     - mongo_host=mongo  

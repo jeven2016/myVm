@@ -71,8 +71,8 @@ services:
   admin-mongo:
     image: mrvautin/adminmongo
     # restart: always
-    #ports:
-    #- '5803:1234'
+    ports:
+    - '5803:1234'
 
   tracker1:
     image: ygqygq2/fastdfs-nginx

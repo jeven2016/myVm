@@ -1,2 +1,2 @@
 #!/bin/sh
-docker build -t zjtech/applecms .
+docker build -t jeven2016/applecmsv10 .

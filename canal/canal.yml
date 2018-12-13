@@ -5,10 +5,10 @@ services:
     restart: always
     environment:
       - canal.instance.master.address=db:3306
-      - canal.instance.dbUsername=db_user
+      - canal.instance.dbUsername=root
       - canal.instance.dbPassword=Wzj_mysql01
-    ports:
-      - ""
+#    ports:
+#      - ""
     depends_on:
       - db
 

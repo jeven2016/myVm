@@ -7,8 +7,8 @@ services:
       - canal.instance.master.address=db:3306
       - canal.instance.dbUsername=root
       - canal.instance.dbPassword=Wzj_mysql01
-#    ports:
-#      - ""
+    ports:
+      - "11111:11111"
     depends_on:
       - db
 
@@ -16,10 +16,30 @@ services:
     image: 'mysql:5.7'
     command: mysqld --user=root --verbose --log-bin==mysql-bin --binlog-format=row --server-id=1
     restart: always
+    ports:
+      - "3306:3306"
 #    volumes:
 #      - /opt/data/mysql/db:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=Wzj_mysql01
       - MYSQL_PASSWORD=Wzj_mysql01
       - MYSQL_DATABASE=nextcloud
-      - MYSQL_USER=db_user      
+      - MYSQL_USER=db_user   
+
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: db_user
+      MONGO_INITDB_ROOT_PASSWORD: Wzj_mysql01
+    ports:
+      - "27017:27017"  
+#    volumes:
+#    - '/opt/data/mongodb:/data/db'
+
+  admin-mongo:
+    image: mrvautin/adminmongo
+    # restart: always
+    ports:
+    - '5803:1234'
+
